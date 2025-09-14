@@ -153,28 +153,28 @@
   </footer>
 
   <script>
-    // Visit counter
-    if (localStorage.getItem("visitCount")) {
-      let count = parseInt(localStorage.getItem("visitCount")) + 1;
-      localStorage.setItem("visitCount", count);
-      document.getElementById("visitCount").innerText = count;
-    } else {
-      localStorage.setItem("visitCount", 1);
-      document.getElementById("visitCount").innerText = 1;
-    }
+  // Visit counter (localStorage-based)
+  if (localStorage.getItem("visitCount")) {
+    let count = parseInt(localStorage.getItem("visitCount")) + 1;
+    localStorage.setItem("visitCount", count);
+    document.getElementById("visitCount").innerText = count;
+  } else {
+    localStorage.setItem("visitCount", 1);
+    document.getElementById("visitCount").innerText = 1;
+  }
 
-    // Offers counter (placeholder – increases manually for demo)
-    if (!localStorage.getItem("offerCount")) {
-      localStorage.setItem("offerCount", 0);
+  // Offers counter (from Google Apps Script API)
+  async function loadOffers() {
+    try {
+      let res = await fetch("https://script.google.com/a/macros/okpc.com/s/AKfycbxriWKuxJTCm0hkAqu75KwWhUiAkquLtWjSxyOR40xPpRLSA8stt8Q1De7G_MOncy32/exec");
+      let data = await res.json();
+      document.getElementById("offerCount").innerText = data.offers;
+    } catch (e) {
+      console.error("Error fetching offers:", e);
+      document.getElementById("offerCount").innerText = "N/A";
     }
-    document.getElementById("offerCount").innerText = localStorage.getItem("offerCount");
-
-    // Function to increment offer count (you'd trigger this on form submission with a backend integration)
-    function incrementOffer() {
-      let offers = parseInt(localStorage.getItem("offerCount")) + 1;
-      localStorage.setItem("offerCount", offers);
-      document.getElementById("offerCount").innerText = offers;
-    }
-  </script>
+  }
+  loadOffers();
+</script>
 </body>
 </html>
