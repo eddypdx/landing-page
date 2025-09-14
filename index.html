@@ -64,6 +64,14 @@
       min-height: 600px;
       border: none;
     }
+    .stats {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f1f1f1;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+    }
     footer {
       background-color: #f1f1f1;
       padding: 20px;
@@ -120,7 +128,9 @@
       ✔ Fast, simple, and transparent process.<br>
     </p>
     <div class="cta">
-      <a href="https://www.escrow.com/partner/godaddy" target="_blank">Start Secure Purchase</a>
+      <a href="https://www.escrow.com/checkout?token=7cdebbcc-6ca2-42f0-9a24-21999e0ed8ca" target="_blank">
+        Buy Now via Escrow.com
+      </a>
     </div>
   </section>
 
@@ -132,10 +142,39 @@
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdnl--B7mnUgEL8R8CIBQM6eWsX_2HIKElavlrDyxBuQOJKjw/viewform?embedded=true">
       Loading…
     </iframe>
+    <div class="stats">
+      <p><strong>Page Visits:</strong> <span id="visitCount">0</span></p>
+      <p><strong>Offers Submitted:</strong> <span id="offerCount">0</span></p>
+    </div>
   </section>
 
   <footer>
     <p>OKPC.com © 2025 | Transactions processed via <a href="https://www.escrow.com" target="_blank">Escrow.com</a></p>
   </footer>
+
+  <script>
+    // Visit counter
+    if (localStorage.getItem("visitCount")) {
+      let count = parseInt(localStorage.getItem("visitCount")) + 1;
+      localStorage.setItem("visitCount", count);
+      document.getElementById("visitCount").innerText = count;
+    } else {
+      localStorage.setItem("visitCount", 1);
+      document.getElementById("visitCount").innerText = 1;
+    }
+
+    // Offers counter (placeholder – increases manually for demo)
+    if (!localStorage.getItem("offerCount")) {
+      localStorage.setItem("offerCount", 0);
+    }
+    document.getElementById("offerCount").innerText = localStorage.getItem("offerCount");
+
+    // Function to increment offer count (you'd trigger this on form submission with a backend integration)
+    function incrementOffer() {
+      let offers = parseInt(localStorage.getItem("offerCount")) + 1;
+      localStorage.setItem("offerCount", offers);
+      document.getElementById("offerCount").innerText = offers;
+    }
+  </script>
 </body>
 </html>
